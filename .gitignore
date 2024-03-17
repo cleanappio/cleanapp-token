@@ -1,5 +1,4 @@
 .env
 .vscode
 artifacts
-cache
 node_modules
