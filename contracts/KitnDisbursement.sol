@@ -5,7 +5,8 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract Wallet {
     // Token contract address for KITN tokens
-    address public constant KITN_ADDRESS = 0xE5a0F6BCCBF606718D3E7844E64Bf9c34727EA33;
+    address public constant KITN_ADDRESS =
+        0xE5a0F6BCCBF606718D3E7844E64Bf9c34727EA33;
     IERC20 public kitnToken = IERC20(KITN_ADDRESS);
 
     // State variable to store the owner of the contract
@@ -22,7 +23,11 @@ contract Wallet {
     }
 
     // Events for logging actions within the contract
-    event AllowanceRenewed(address indexed user, uint allowance, uint timeLimit);
+    event AllowanceRenewed(
+        address indexed user,
+        uint allowance,
+        uint timeLimit
+    );
     event CoinsSpent(address indexed receiver, uint amount);
 
     // Modifier to restrict function access to the owner of the contract
@@ -45,14 +50,18 @@ contract Wallet {
     }
 
     // Function to renew or set a user's allowance and validity, restricted to owner
-    function renewAllowance(address _user, uint _allowance, uint _timeLimit) public onlyOwner {
+    function renewAllowance(
+        address _user,
+        uint _allowance,
+        uint _timeLimit
+    ) public onlyOwner {
         uint validity = block.timestamp + _timeLimit; // Set validity based on current time and time limit
         users[_user] = User(_user, _allowance, validity); // Update the user's allowance and validity
         emit AllowanceRenewed(_user, _allowance, _timeLimit); // Log the allowance renewal
     }
 
     // Function for users to check their current allowance
-    function myAllowance() public view returns(uint) {
+    function myAllowance() public view returns (uint) {
         return users[msg.sender].allowance;
     }
 
@@ -61,12 +70,15 @@ contract Wallet {
         User storage user = users[msg.sender];
         require(block.timestamp < user.validity, "Validity expired!!");
         require(_amount <= user.allowance, "Allowance not sufficient!!");
-        
+
         // Deduct the amount from the user's allowance
         user.allowance -= _amount;
 
         // Transfer KITN tokens from this contract to the _receiver
-        require(kitnToken.transfer(_receiver, _amount), "Token transfer failed");
+        require(
+            kitnToken.transfer(_receiver, _amount),
+            "Token transfer failed"
+        );
 
         emit CoinsSpent(_receiver, _amount);
     }
