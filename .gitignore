@@ -1,3 +1,4 @@
 .env
 .vscode
+artifacts
 node_modules
