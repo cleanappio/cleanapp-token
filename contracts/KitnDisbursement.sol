@@ -3,7 +3,7 @@ pragma solidity 0.8.20;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
-contract Wallet {
+contract KitnDisbursement {
     // Token contract address for KITN tokens
     address public constant KITN_ADDRESS =
         0xE5a0F6BCCBF606718D3E7844E64Bf9c34727EA33;
