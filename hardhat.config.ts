@@ -2,6 +2,7 @@ import { HardhatUserConfig } from 'hardhat/config';
 import '@nomicfoundation/hardhat-toolbox';
 
 require('dotenv').config();
+require('hardhat-abi-exporter');
 
 const config: HardhatUserConfig = {
   solidity: {
@@ -45,6 +46,12 @@ const config: HardhatUserConfig = {
   },
   sourcify: {
     enabled: false
+  },
+  abiExporter: {
+    path: './abi',
+    runOnCompile: true,
+    clear: true,
+    spacing: 2,
   }
 };
 

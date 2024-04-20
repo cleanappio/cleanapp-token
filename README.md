@@ -1,0 +1,32 @@
+# KITN Disbursement Smart Contract
+
+## Deploying the smart contract
+
+Refer to the page: https://www.web3.university/tracks/create-a-smart-contract/deploy-your-first-smart-contract
+
+## Accessing the smart contract with Go
+
+The smart contract is to be exported into `.abi` and then the `.go` interface is to be exported. This interface is to be used in the backend for the smart contract communication.
+
+By default you don't need to do it every time when you clone this repository or the backend repository, the `kitn_disbursement.go` is included into the backend. This guide might be needed when we'll have the next version of the smart contract. 
+
+### Pre-requisites
+
+Install abigen utility. It's included into the repository but might need upgrade.
+
+```
+go install github.com/ethereum/go-ethereum/cmd/abigen@latest
+```
+
+### Steps
+
+1.  Export the smart contract to abi format
+    ```
+    yarn run hardhat export-abi
+    ```
+1.  Convert `.abi` to `.go` interface
+    ```
+    mkdir -p go_disbursement
+    abigen --abi abi/contracts/KitnDisbursement.sol/KitnDisbursement.json --pkg contract --type KitnDisbursement --out go_disbursement/kitn_disbursement.go
+    ```
+1.  Copy the `.go` to the `cleanapp_back_end_v2` repository. The directory in cleanapp_back_end_v2 is: `pipelines/disbursement/contract/kitn_disbursement.go`
