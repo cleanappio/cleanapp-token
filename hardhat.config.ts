@@ -3,6 +3,7 @@ import '@nomicfoundation/hardhat-toolbox';
 
 require('dotenv').config();
 require('hardhat-abi-exporter');
+require("@nomicfoundation/hardhat-toolbox")
 
 const config: HardhatUserConfig = {
   solidity: {
@@ -30,9 +31,7 @@ const config: HardhatUserConfig = {
   },
   defaultNetwork: 'hardhat',
   etherscan: {
-    apiKey: {
-      'base-sepolia': 'PLACEHOLDER_STRING'
-    },
+    apiKey: process.env.BASESCAN_API_KEY as string,
     customChains: [
       {
         network: 'base-sepolia',

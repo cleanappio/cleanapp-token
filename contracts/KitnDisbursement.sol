@@ -13,7 +13,7 @@ contract KitnDisbursement {
     address public owner;
 
     // Mapping to store allowances and validity for each user
-    mapping(address => User) public users;
+    User public user;
 
     // Struct to represent a user with an allowance and validity period
     struct User {
@@ -50,24 +50,19 @@ contract KitnDisbursement {
     }
 
     // Function to renew or set a user's allowance and validity, restricted to owner
-    function renewAllowance(
-        address _user,
-        uint _allowance,
-        uint _timeLimit
-    ) public onlyOwner {
+    function renewAllowance(uint _allowance, uint _timeLimit) public onlyOwner {
         uint validity = block.timestamp + _timeLimit; // Set validity based on current time and time limit
-        users[_user] = User(_user, _allowance, validity); // Update the user's allowance and validity
-        emit AllowanceRenewed(_user, _allowance, _timeLimit); // Log the allowance renewal
+        user = User(msg.sender, _allowance, validity); // Update the user's allowance and validity
+        emit AllowanceRenewed(msg.sender, _allowance, _timeLimit); // Log the allowance renewal
     }
 
     // Function for users to check their current allowance
     function myAllowance() public view returns (uint) {
-        return users[msg.sender].allowance;
+        return user.allowance;
     }
 
     // Function to spend coins from allowance within the validity period
     function spendCoins(address _receiver, uint _amount) public {
-        User storage user = users[msg.sender];
         require(block.timestamp < user.validity, "Validity expired!!");
         require(_amount <= user.allowance, "Allowance not sufficient!!");
 

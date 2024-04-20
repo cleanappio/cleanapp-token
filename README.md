@@ -2,7 +2,22 @@
 
 ## Deploying the smart contract
 
-Refer to the page: https://www.web3.university/tracks/create-a-smart-contract/deploy-your-first-smart-contract
+1.  Run the command:
+    ```
+    npx hardhat run scripts/deploy.ts --network base-sepolia
+    ```
+2.  If the contract is successfully deployed you'll get the output:
+    ```
+    Contract deployed to address: 0x...
+    ```
+    Copy the address and keep it somewhere. You'll need it for further token disbursement configuration.
+
+## Verifying the smart contract
+
+Run the command:
+```
+npx hardhat verify --network base-sepolia <contract address>
+```
 
 ## Accessing the smart contract with Go
 
@@ -12,7 +27,7 @@ By default you don't need to do it every time when you clone this repository or 
 
 ### Pre-requisites
 
-Install abigen utility. It's included into the repository but might need upgrade.
+Install abigen utility.
 
 ```
 go install github.com/ethereum/go-ethereum/cmd/abigen@latest
