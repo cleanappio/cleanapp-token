@@ -23,25 +23,39 @@ import type {
   TypedContractMethod,
 } from "../common";
 
+export declare namespace KitnDisbursement {
+  export type CoinsSpendResultStruct = {
+    receiver: AddressLike;
+    amount: BigNumberish;
+    result: boolean;
+  };
+
+  export type CoinsSpendResultStructOutput = [
+    receiver: string,
+    amount: bigint,
+    result: boolean
+  ] & { receiver: string; amount: bigint; result: boolean };
+}
+
 export interface KitnDisbursementInterface extends Interface {
   getFunction(
     nameOrSignature:
       | "KITN_ADDRESS"
+      | "getKitnBalance"
       | "getWalletBalance"
       | "kitnToken"
-      | "myAllowance"
       | "owner"
-      | "renewAllowance"
       | "spendCoins"
-      | "user"
   ): FunctionFragment;
 
-  getEvent(
-    nameOrSignatureOrTopic: "AllowanceRenewed" | "CoinsSpent"
-  ): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "CoinsSpent"): EventFragment;
 
   encodeFunctionData(
     functionFragment: "KITN_ADDRESS",
+    values?: undefined
+  ): string;
+  encodeFunctionData(
+    functionFragment: "getKitnBalance",
     values?: undefined
   ): string;
   encodeFunctionData(
@@ -49,23 +63,18 @@ export interface KitnDisbursementInterface extends Interface {
     values?: undefined
   ): string;
   encodeFunctionData(functionFragment: "kitnToken", values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: "myAllowance",
-    values?: undefined
-  ): string;
   encodeFunctionData(functionFragment: "owner", values?: undefined): string;
   encodeFunctionData(
-    functionFragment: "renewAllowance",
-    values: [BigNumberish, BigNumberish]
-  ): string;
-  encodeFunctionData(
     functionFragment: "spendCoins",
-    values: [AddressLike, BigNumberish]
+    values: [AddressLike[], BigNumberish[]]
   ): string;
-  encodeFunctionData(functionFragment: "user", values?: undefined): string;
 
   decodeFunctionResult(
     functionFragment: "KITN_ADDRESS",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(
+    functionFragment: "getKitnBalance",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -73,47 +82,17 @@ export interface KitnDisbursementInterface extends Interface {
     data: BytesLike
   ): Result;
   decodeFunctionResult(functionFragment: "kitnToken", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "myAllowance",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
-  decodeFunctionResult(
-    functionFragment: "renewAllowance",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "spendCoins", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "user", data: BytesLike): Result;
-}
-
-export namespace AllowanceRenewedEvent {
-  export type InputTuple = [
-    user: AddressLike,
-    allowance: BigNumberish,
-    timeLimit: BigNumberish
-  ];
-  export type OutputTuple = [
-    user: string,
-    allowance: bigint,
-    timeLimit: bigint
-  ];
-  export interface OutputObject {
-    user: string;
-    allowance: bigint;
-    timeLimit: bigint;
-  }
-  export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
-  export type Filter = TypedDeferredTopicFilter<Event>;
-  export type Log = TypedEventLog<Event>;
-  export type LogDescription = TypedLogDescription<Event>;
 }
 
 export namespace CoinsSpentEvent {
-  export type InputTuple = [receiver: AddressLike, amount: BigNumberish];
-  export type OutputTuple = [receiver: string, amount: bigint];
+  export type InputTuple = [results: KitnDisbursement.CoinsSpendResultStruct[]];
+  export type OutputTuple = [
+    results: KitnDisbursement.CoinsSpendResultStructOutput[]
+  ];
   export interface OutputObject {
-    receiver: string;
-    amount: bigint;
+    results: KitnDisbursement.CoinsSpendResultStructOutput[];
   }
   export type Event = TypedContractEvent<InputTuple, OutputTuple, OutputObject>;
   export type Filter = TypedDeferredTopicFilter<Event>;
@@ -166,36 +145,18 @@ export interface KitnDisbursement extends BaseContract {
 
   KITN_ADDRESS: TypedContractMethod<[], [string], "view">;
 
+  getKitnBalance: TypedContractMethod<[], [bigint], "view">;
+
   getWalletBalance: TypedContractMethod<[], [bigint], "view">;
 
   kitnToken: TypedContractMethod<[], [string], "view">;
 
-  myAllowance: TypedContractMethod<[], [bigint], "view">;
-
   owner: TypedContractMethod<[], [string], "view">;
 
-  renewAllowance: TypedContractMethod<
-    [_allowance: BigNumberish, _timeLimit: BigNumberish],
-    [void],
-    "nonpayable"
-  >;
-
   spendCoins: TypedContractMethod<
-    [_receiver: AddressLike, _amount: BigNumberish],
+    [_receivers: AddressLike[], _amounts: BigNumberish[]],
     [void],
     "nonpayable"
-  >;
-
-  user: TypedContractMethod<
-    [],
-    [
-      [string, bigint, bigint] & {
-        userAddress: string;
-        allowance: bigint;
-        validity: bigint;
-      }
-    ],
-    "view"
   >;
 
   getFunction<T extends ContractMethod = ContractMethod>(
@@ -206,52 +167,25 @@ export interface KitnDisbursement extends BaseContract {
     nameOrSignature: "KITN_ADDRESS"
   ): TypedContractMethod<[], [string], "view">;
   getFunction(
+    nameOrSignature: "getKitnBalance"
+  ): TypedContractMethod<[], [bigint], "view">;
+  getFunction(
     nameOrSignature: "getWalletBalance"
   ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
     nameOrSignature: "kitnToken"
   ): TypedContractMethod<[], [string], "view">;
   getFunction(
-    nameOrSignature: "myAllowance"
-  ): TypedContractMethod<[], [bigint], "view">;
-  getFunction(
     nameOrSignature: "owner"
   ): TypedContractMethod<[], [string], "view">;
   getFunction(
-    nameOrSignature: "renewAllowance"
-  ): TypedContractMethod<
-    [_allowance: BigNumberish, _timeLimit: BigNumberish],
-    [void],
-    "nonpayable"
-  >;
-  getFunction(
     nameOrSignature: "spendCoins"
   ): TypedContractMethod<
-    [_receiver: AddressLike, _amount: BigNumberish],
+    [_receivers: AddressLike[], _amounts: BigNumberish[]],
     [void],
     "nonpayable"
   >;
-  getFunction(
-    nameOrSignature: "user"
-  ): TypedContractMethod<
-    [],
-    [
-      [string, bigint, bigint] & {
-        userAddress: string;
-        allowance: bigint;
-        validity: bigint;
-      }
-    ],
-    "view"
-  >;
 
-  getEvent(
-    key: "AllowanceRenewed"
-  ): TypedContractEvent<
-    AllowanceRenewedEvent.InputTuple,
-    AllowanceRenewedEvent.OutputTuple,
-    AllowanceRenewedEvent.OutputObject
-  >;
   getEvent(
     key: "CoinsSpent"
   ): TypedContractEvent<
@@ -261,18 +195,7 @@ export interface KitnDisbursement extends BaseContract {
   >;
 
   filters: {
-    "AllowanceRenewed(address,uint256,uint256)": TypedContractEvent<
-      AllowanceRenewedEvent.InputTuple,
-      AllowanceRenewedEvent.OutputTuple,
-      AllowanceRenewedEvent.OutputObject
-    >;
-    AllowanceRenewed: TypedContractEvent<
-      AllowanceRenewedEvent.InputTuple,
-      AllowanceRenewedEvent.OutputTuple,
-      AllowanceRenewedEvent.OutputObject
-    >;
-
-    "CoinsSpent(address,uint256)": TypedContractEvent<
+    "CoinsSpent(tuple[])": TypedContractEvent<
       CoinsSpentEvent.InputTuple,
       CoinsSpentEvent.OutputTuple,
       CoinsSpentEvent.OutputObject

@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/Users/eko2000/cleanapp/cleanapp-token/contracts/KitnDisbursement.sol": {
-      "lastModificationDate": 1713641911418,
-      "contentHash": "e932f23dae95d4b4247d2fa0a72e4144",
+      "lastModificationDate": 1713727465095,
+      "contentHash": "151b1d09f413a4d0d0e56c209b6cdc24",
       "sourceName": "contracts/KitnDisbursement.sol",
       "solcConfig": {
         "version": "0.8.20",

@@ -44,4 +44,4 @@ go install github.com/ethereum/go-ethereum/cmd/abigen@latest
     mkdir -p go_disbursement
     abigen --abi abi/contracts/KitnDisbursement.sol/KitnDisbursement.json --pkg contract --type KitnDisbursement --out go_disbursement/kitn_disbursement.go
     ```
-1.  Copy the `.go` to the `cleanapp_back_end_v2` repository. The directory in cleanapp_back_end_v2 is: `pipelines/disbursement/contract/kitn_disbursement.go`
+1.  Copy the `.go` to the `cleanapp_back_end_v2` repository. The directory in cleanapp_back_end_v2 is: `pipelines/disburse/contract/kitn_disbursement.go`
