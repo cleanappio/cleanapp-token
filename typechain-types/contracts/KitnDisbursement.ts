@@ -46,6 +46,7 @@ export interface KitnDisbursementInterface extends Interface {
       | "kitnToken"
       | "owner"
       | "spendCoins"
+      | "transferKitnToMe"
   ): FunctionFragment;
 
   getEvent(nameOrSignatureOrTopic: "CoinsSpent"): EventFragment;
@@ -68,6 +69,10 @@ export interface KitnDisbursementInterface extends Interface {
     functionFragment: "spendCoins",
     values: [AddressLike[], BigNumberish[]]
   ): string;
+  encodeFunctionData(
+    functionFragment: "transferKitnToMe",
+    values: [BigNumberish]
+  ): string;
 
   decodeFunctionResult(
     functionFragment: "KITN_ADDRESS",
@@ -84,6 +89,10 @@ export interface KitnDisbursementInterface extends Interface {
   decodeFunctionResult(functionFragment: "kitnToken", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "owner", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "spendCoins", data: BytesLike): Result;
+  decodeFunctionResult(
+    functionFragment: "transferKitnToMe",
+    data: BytesLike
+  ): Result;
 }
 
 export namespace CoinsSpentEvent {
@@ -159,6 +168,12 @@ export interface KitnDisbursement extends BaseContract {
     "nonpayable"
   >;
 
+  transferKitnToMe: TypedContractMethod<
+    [_amount: BigNumberish],
+    [void],
+    "nonpayable"
+  >;
+
   getFunction<T extends ContractMethod = ContractMethod>(
     key: string | FunctionFragment
   ): T;
@@ -185,6 +200,9 @@ export interface KitnDisbursement extends BaseContract {
     [void],
     "nonpayable"
   >;
+  getFunction(
+    nameOrSignature: "transferKitnToMe"
+  ): TypedContractMethod<[_amount: BigNumberish], [void], "nonpayable">;
 
   getEvent(
     key: "CoinsSpent"

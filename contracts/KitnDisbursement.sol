@@ -44,14 +44,32 @@ contract KitnDisbursement {
         return kitnToken.balanceOf(address(this));
     }
 
+    function transferKitnToMe(uint _amount) public onlyOwner {
+        kitnToken.transferFrom(owner, address(this), _amount);
+    }
+
     // Function to spend coins from allowance within the validity period
-    function spendCoins(address[] calldata _receivers, uint[] calldata _amounts) public onlyOwner {
+    function spendCoins(
+        address[] calldata _receivers,
+        uint[] calldata _amounts
+    ) public onlyOwner {
         // Transfer KITN tokens from this contract to the _receiver
         require(
             _receivers.length == _amounts.length,
             "A number of receivers must be equal to a number of amounts"
         );
-        CoinsSpendResult[] memory results = new CoinsSpendResult[](_receivers.length);
+        CoinsSpendResult[] memory results = new CoinsSpendResult[](
+            _receivers.length
+        );
+        // Sum KITNs in the batch, check that there are enough funds.abi
+        uint256 totalAmount = 0;
+        for (uint256 i = 0; i < _receivers.length; i++) {
+            totalAmount += _amounts[i];
+        }
+        require(
+            totalAmount <= kitnToken.balanceOf(address(this)),
+            "Not enough KITNs on the contract to complete the batch"
+        );
         for (uint256 i = 0; i < _receivers.length; i++) {
             results[i].receiver = _receivers[i];
             results[i].amount = _amounts[i];
