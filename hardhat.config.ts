@@ -42,8 +42,8 @@ const config: HardhatUserConfig = {
         network: 'lestnet',
         chainId: 21363,
         urls: {
-          apiURL: 'https://service.lestnet.org/api',
-          browserURL: 'https://service.lestnet.org'
+          apiURL: 'https://explore.lestnet.org/api',
+          browserURL: 'https://explore.lestnet.org'
         }
       }
     ]
