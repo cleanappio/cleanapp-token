@@ -10,28 +10,25 @@ const config: HardhatUserConfig = {
     version: '0.8.20',
   },
   networks: {
-    // for mainnet
-    'base-mainnet': {
-      url: 'https://mainnet.base.org',
-      accounts: [process.env.WALLET_KEY as string],
-      gasPrice: 1000000000,
-    },
-    // for testnet
+    // for sepolia testnet
     'base-sepolia': {
       url: 'https://sepolia.base.org',
       accounts: [process.env.WALLET_KEY as string],
       gasPrice: 1000000000,
     },
-    // for local dev environment
-    'base-local': {
-      url: 'http://localhost:8545',
+    // for lestnet
+    'lestnet': {
+      url: 'https://service.lestnet.org',
       accounts: [process.env.WALLET_KEY as string],
       gasPrice: 1000000000,
     },
   },
   defaultNetwork: 'hardhat',
   etherscan: {
-    apiKey: process.env.BASESCAN_API_KEY as string,
+    apiKey: {
+      "base-sepolia": process.env.BASESCAN_API_KEY as string,
+      "lestnet": "dummy",
+    },
     customChains: [
       {
         network: 'base-sepolia',
@@ -39,6 +36,14 @@ const config: HardhatUserConfig = {
         urls: {
           apiURL: 'https://api-sepolia.basescan.org/api',
           browserURL: 'https://sepolia.basescan.org'
+        }
+      },
+      {
+        network: 'lestnet',
+        chainId: 21363,
+        urls: {
+          apiURL: 'https://service.lestnet.org/api',
+          browserURL: 'https://service.lestnet.org'
         }
       }
     ]

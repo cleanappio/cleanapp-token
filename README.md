@@ -4,7 +4,7 @@
 
 1.  Run the command:
     ```
-    npx hardhat run scripts/deploy.ts --network base-sepolia
+    npx hardhat run scripts/disburse_kitn.ts --network base-sepolia
     ```
 2.  If the contract is successfully deployed you'll get the output:
     ```

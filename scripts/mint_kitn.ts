@@ -1,9 +1,9 @@
 import { ethers } from 'hardhat';
 
 async function main() {
-  const kitn = await ethers.deployContract('KitnDisbursement');
+  const kitn = await ethers.deployContract('CleanAppKITN');
   await kitn.waitForDeployment();
-  console.log("Contract deployed to address:", kitn.target);
+  console.log("CleanAppKITN contract deployed to address:", kitn.target);
 }
 
 main()
