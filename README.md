@@ -45,3 +45,8 @@ go install github.com/ethereum/go-ethereum/cmd/abigen@latest
     abigen --abi abi/contracts/KitnDisbursement.sol/KitnDisbursement.json --pkg contract --type KitnDisbursement --out go_disbursement/kitn_disbursement.go
     ```
 1.  Copy the `.go` to the `cleanapp_back_end_v2` repository. The directory in cleanapp_back_end_v2 is: `pipelines/disburse/contract/kitn_disbursement.go`
+
+# Contract addresses on Lestnet
+KITN treasure account and disburser owner: `0xF821AdA310c3c7DA23aBEa279bA5Bf22B359A7e1`
+KITN minting contract: `0x7ccD117FC62B90C14a60eD821f55470B76cf7fb7`
+KITN disbursing contract: `0x36791eD1D402ffF19b4CFBE6985d584066473E7D`

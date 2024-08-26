@@ -4,10 +4,8 @@ pragma solidity 0.8.20;
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract KitnDisbursement {
-    // Token contract address for KITN tokens
-    address public constant KITN_ADDRESS =
-        0xE5a0F6BCCBF606718D3E7844E64Bf9c34727EA33;
-    IERC20 public kitnToken = IERC20(KITN_ADDRESS);
+    // KITN token, initialized in the constructor
+    IERC20 public kitnToken;
 
     // State variable to store the owner of the contract
     address public owner;
@@ -27,8 +25,9 @@ contract KitnDisbursement {
     }
 
     // Constructor sets the deploying address as the owner of the contract
-    constructor() {
+    constructor(address _kitnAddress) {
         owner = msg.sender;
+        kitnToken = IERC20(_kitnAddress);
     }
 
     // Function to allow the contract to receive ether, but only from the owner

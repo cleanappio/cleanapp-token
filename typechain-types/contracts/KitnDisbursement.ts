@@ -40,7 +40,6 @@ export declare namespace KitnDisbursement {
 export interface KitnDisbursementInterface extends Interface {
   getFunction(
     nameOrSignature:
-      | "KITN_ADDRESS"
       | "getKitnBalance"
       | "getWalletBalance"
       | "kitnToken"
@@ -51,10 +50,6 @@ export interface KitnDisbursementInterface extends Interface {
 
   getEvent(nameOrSignatureOrTopic: "CoinsSpent"): EventFragment;
 
-  encodeFunctionData(
-    functionFragment: "KITN_ADDRESS",
-    values?: undefined
-  ): string;
   encodeFunctionData(
     functionFragment: "getKitnBalance",
     values?: undefined
@@ -74,10 +69,6 @@ export interface KitnDisbursementInterface extends Interface {
     values: [BigNumberish]
   ): string;
 
-  decodeFunctionResult(
-    functionFragment: "KITN_ADDRESS",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(
     functionFragment: "getKitnBalance",
     data: BytesLike
@@ -152,8 +143,6 @@ export interface KitnDisbursement extends BaseContract {
     event?: TCEvent
   ): Promise<this>;
 
-  KITN_ADDRESS: TypedContractMethod<[], [string], "view">;
-
   getKitnBalance: TypedContractMethod<[], [bigint], "view">;
 
   getWalletBalance: TypedContractMethod<[], [bigint], "view">;
@@ -178,9 +167,6 @@ export interface KitnDisbursement extends BaseContract {
     key: string | FunctionFragment
   ): T;
 
-  getFunction(
-    nameOrSignature: "KITN_ADDRESS"
-  ): TypedContractMethod<[], [string], "view">;
   getFunction(
     nameOrSignature: "getKitnBalance"
   ): TypedContractMethod<[], [bigint], "view">;
