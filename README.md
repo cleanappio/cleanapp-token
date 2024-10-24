@@ -49,4 +49,4 @@ go install github.com/ethereum/go-ethereum/cmd/abigen@latest
 # Contract addresses on Lestnet
 KITN treasure account and disburser owner: `0xF821AdA310c3c7DA23aBEa279bA5Bf22B359A7e1`
 KITN minting contract: `0x7ccD117FC62B90C14a60eD821f55470B76cf7fb7`
-KITN disbursing contract: `0x36791eD1D402ffF19b4CFBE6985d584066473E7D`
+KITN disbursing contract: `0x581A05626F96a990D306E9005A2e3bCBD150F522`
